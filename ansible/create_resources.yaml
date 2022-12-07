@@ -1,0 +1,25 @@
+- hosts: localhost
+  tasks:
+  - name: "Create basic objects for user {{ user }}"
+    kubernetes.core.k8s:
+      state: present
+      template: 'resources.yaml.j2'
+      apply: yes
+
+  - name: Create Roles
+    kubernetes.core.k8s:
+      state: present
+      template: 'roles.yaml.j2'
+      apply: yes      
+ 
+  - name: "Create RoleBindings for user {{ user }}"
+    kubernetes.core.k8s:
+      state: present
+      template: 'rolebindings.yaml.j2'
+      apply: yes      
+
+  - name: "Fix Knative Eventing object"
+    kubernetes.core.k8s:
+      state: present
+      template: 'keventing_instance.yaml.j2'
+      apply: yes      

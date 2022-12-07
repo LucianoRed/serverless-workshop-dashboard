@@ -1,0 +1,74 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: knative-eventing-view
+  namespace: knative-eventing
+rules:
+  - verbs:
+      - list
+      - get
+    apiGroups:
+      - ''
+      - kafka.strimzi.io
+      - operator.knative.dev
+    resources:
+      - pods
+      - knativeeventings
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: knative-serving-view
+  namespace: knative-serving
+rules:
+  - verbs:
+      - list
+      - get
+    apiGroups:
+      - ''
+      - kafka.strimzi.io
+      - operator.knative.dev
+    resources:
+      - pods
+      - knativeservings
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kafka-view
+  namespace: kafka
+rules:
+  - verbs:
+      - list
+    apiGroups:
+      - kafka.strimzi.io
+    resources:
+      - kafkas
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: routes-view
+rules:
+  - verbs:
+      - list
+      - get
+    apiGroups:
+      - route.openshift.io
+    resources:
+      - routes
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kafka-topic-create
+  namespace: kafka
+rules:
+  - verbs:
+      - list
+      - create 
+    apiGroups:
+      - kafka.strimzi.io
+    resources:
+      - kafkatopics      

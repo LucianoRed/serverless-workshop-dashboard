@@ -35,6 +35,17 @@ For direct access to the workshop, you can navigate to:
 ## Clean Up
 Delete the RHPDS cluster once you are done running the workshop
 
+
+### Using your own cluster
+## Pre-requisites
+* Kafka Operator Installed
+* Kafka cluster created with name "my-cluster" on kafka namespace
+* Authentication using httpasswd with users already created
+* Serverless operator created with Serving and Eventing instances created
+* Create roles and rolebindings accordingly to the number of users (ansible)
+
+
+
 ---
 
 If you want to contribute and help develop for this workshop, please [see developer instructions here](./README-Developers.md)

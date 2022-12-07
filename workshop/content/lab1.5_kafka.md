@@ -165,13 +165,13 @@ USER_NUMBER=$(oc whoami | sed 's/user//')
 Now create the topic.
 
 ```execute
-curl -sS https://raw.githubusercontent.com/RedHatGov/serverless-workshop-code/main/kafka/kafka-topic.yml | sed "s/USER_NUMBER/$USER_NUMBER/" | oc apply -f -
+curl -sS https://raw.githubusercontent.com/LucianoRed/serverless-workshop-code/main/kafka/kafka-topic.yml | sed "s/USER_NUMBER/$USER_NUMBER/" | oc create -f -
 ```
 
 Verify it was created:
 
 ```execute
-oc get kafkatopics
+oc get kafkatopics -n kafka | grep $USER_NUMBER
 ```
 
 ```
@@ -287,6 +287,10 @@ After, select the top terminal and press `ctrl-c` to stop watching the pods.
 ###  Cleanup
 
 Finally let's delete the kafkasource, kafkatopic, and knative service.
+
+```execute
+<ctrl+c>
+```
 
 ```execute
 oc delete kafkasource mykafka-source

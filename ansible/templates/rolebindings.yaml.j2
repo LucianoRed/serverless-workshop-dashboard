@@ -1,0 +1,111 @@
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-operator-viewers-{{ user }}
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: operator-view
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-knative-eventing-viewers-{{ user }}
+  namespace: knative-eventing
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: knative-eventing-view
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-knative-serving-viewers-{{ user }}
+  namespace: knative-serving
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: knative-serving-view
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-kafka-viewers-{{ user }}
+  namespace: kafka
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kafka-view
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ user }}
+  namespace: {{ user }}
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-kafka-topic-creators-{{ user }}
+  namespace: kafka
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kafka-topic-create
+---
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-cluster-readers-{{ user }}
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: {{ user }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-reader
+---
+# kind: RoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: workshop-routes-viewers-{{ user }}
+#   namespace: openshift-workspaces
+# subjects:
+#   - kind: User
+#     apiGroup: rbac.authorization.k8s.io
+#     name: {{ user }}
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: routes-view

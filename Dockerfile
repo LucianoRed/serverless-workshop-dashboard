@@ -10,9 +10,10 @@ RUN wget https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip && \
     rm -rf ./aws
 
 # install stern
-RUN wget https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64 -O /usr/local/bin/stern && \
-    chown 1001 /usr/local/bin/stern && \
-    chmod 550 /usr/local/bin/stern
+# RUN wget https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64 -O /usr/local/bin/stern && \
+#     chown 1001 /usr/local/bin/stern && \
+#     chmod 550 /usr/local/bin/stern
+RUN cd /tmp && wget https://github.com/stern/stern/releases/download/v1.22.0/stern_1.22.0_linux_amd64.tar.gz && tar -zxvf stern_1.22.0_linux_amd64.tar.gz && mv /tmp/stern /usr/local/bin/stern && chown 1001 /usr/local/bin/stern && chmod 555 /usr/local/bin/stern
 
 # install kn
 RUN wget https://mirror.openshift.com/pub/openshift-v4/clients/serverless/0.17.3/kn-linux-amd64-0.17.3.tar.gz && \

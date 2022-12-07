@@ -53,6 +53,11 @@ NAME                   READY   STATUS      RESTARTS   AGE
 hello-python-1-build   0/1     Completed   0          9m44s
 ```
 
+Stop watching...
+
+```execute
+<ctrl+c>
+```
 ### Deploy the service
 
 Deploying the image is as simple as giving it a name, `hello-python`, an image location, and whatever environment variables our application needs.
@@ -97,7 +102,7 @@ In another terminal, curl the endpoint:
 
 ```execute-2
 HELLO_URL=$(oc get route.serving.knative.dev hello-python --template='{{.status.url}}')
-curl $HELLO_URL
+curl -k $HELLO_URL
 ```
 
 You should see:
@@ -142,7 +147,7 @@ The `hello-python` should not be running.
 In another terminal we'll curl the endpoint again.
 
 ```execute-2
-curl $HELLO_URL
+curl -k $HELLO_URL
 ```
 
 You should now see the `hello-python` service appear and change states from `Pending` to `ContainerCreating` to `Running`.
@@ -156,6 +161,12 @@ Hello Pythonistas!
 If you wait another ~90s, then you will see the `hello-python` service again be destroyed.
 
 ### Delete service
+
+Stop watching...
+
+```execute
+<ctrl+c>
+```
 
 ```execute
 kn service delete hello-python
