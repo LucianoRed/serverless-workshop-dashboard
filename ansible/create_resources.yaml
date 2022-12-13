@@ -1,25 +1,67 @@
 - hosts: localhost
   tasks:
-  - name: "Create basic objects for user {{ user }}"
+
+  - name: Create base64 var with users
+    set_fact:
+      base64_encoded_htpasswd_file_contents: "{{lookup('ansible.builtin.file', 'templates/users') | b64encode }}"
+
+  - name: Create new Oauth with httpasswd as provider
+    kubernetes.core.k8s:
+      state: present
+      template: 'oauth_httpasswd.yaml.j2'
+      apply: yes
+
+
+  - name: Create Kafka Namespace and Cluster
+    kubernetes.core.k8s:
+      state: present
+      template: 'kafka_stuff.yaml.j2'
+      apply: yes  
+
+  - name: Create Knative Serving and Eventing Instances
+    kubernetes.core.k8s:
+      state: present
+      template: 'knative_stuff.yaml.j2'
+      apply: yes  
+
+  # - name: Create Homeroon stuff
+  #   kubernetes.core.k8s:
+  #     state: present
+  #     template: 'homeroom_stuff.yaml.j2'
+  #     apply: yes  
+
+  # - name: "Fix Knative Eventing object"
+  #   kubernetes.core.k8s:
+  #     state: present
+  #     template: 'keventing_instance.yaml.j2'
+  #     apply: yes    
+
+  - name: Create Kafka Topics for users
+    kubernetes.core.k8s:
+      state: present
+      template: 'kafka_topic.yaml.j2'
+      apply: yes  
+    with_sequence: start=1 end=20 stride=1 
+
+  - name: "Create basic objects for user"
     kubernetes.core.k8s:
       state: present
       template: 'resources.yaml.j2'
       apply: yes
+    with_sequence: start=1 end=20 stride=1 
 
   - name: Create Roles
     kubernetes.core.k8s:
       state: present
       template: 'roles.yaml.j2'
       apply: yes      
- 
+
+
   - name: "Create RoleBindings for user {{ user }}"
     kubernetes.core.k8s:
       state: present
       template: 'rolebindings.yaml.j2'
-      apply: yes      
+      apply: yes
+    with_sequence: start=1 end=20 stride=1       
 
-  - name: "Fix Knative Eventing object"
-    kubernetes.core.k8s:
-      state: present
-      template: 'keventing_instance.yaml.j2'
-      apply: yes      
+

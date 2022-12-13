@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/description: ""
+    openshift.io/display-name: "Homeroom Workshops"
+    openshift.io/requester: homeroom
+  labels:
+    kubernetes.io/metadata.name: homeroom
+  name: homeroom
+spec:
+  finalizers:
+  - kubernetes

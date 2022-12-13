@@ -44,6 +44,15 @@ Delete the RHPDS cluster once you are done running the workshop
 * Serverless operator created with Serving and Eventing instances created
 * Create roles and rolebindings accordingly to the number of users (ansible)
 
+## Preparation
+### Install the Kafka and Serverless Operators
+![](images/operator-kafka-serverless.png)
+
+On installation you can safely accept all default options. After install, you probably will have the following:
+
+![](images/operators-installed.png)
+
+
 
 
 ---

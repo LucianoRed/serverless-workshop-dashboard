@@ -71,4 +71,64 @@ rules:
     apiGroups:
       - kafka.strimzi.io
     resources:
-      - kafkatopics      
+      - kafkatopics     
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: operator-view
+rules:
+  - verbs:
+      - list
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - operators
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: eventing-kafka-source-creator
+  labels:
+    duck.knative.dev/source: 'true'
+    kafka.eventing.knative.dev/release: v1.4
+  annotations:
+    knativekafkas.operator.serverless.openshift.io/ownerName: knative-kafka
+    knativekafkas.operator.serverless.openshift.io/ownerNamespace: knative-eventing
+rules:
+  - verbs:
+      - get
+      - list
+      - watch
+      - create
+    apiGroups:
+      - sources.knative.dev
+    resources:
+      - kafkasources      
+---      
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kafka-cluster-view
+  namespace: kafka
+rules:
+  - verbs:
+      - list
+    apiGroups:
+      - kafka.strimzi.io
+    resources:
+      - kafkas
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kafka-topic-create-cluster
+  namespace: kafka
+rules:
+  - verbs:
+      - list
+      - create 
+    apiGroups:
+      - kafka.strimzi.io
+    resources:
+      - kafkatopics           

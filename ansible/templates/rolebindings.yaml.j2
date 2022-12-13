@@ -2,11 +2,11 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-operator-viewers-{{ user }}
+  name: workshop-operator-viewers-user{{ item }}
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -15,12 +15,12 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-knative-eventing-viewers-{{ user }}
+  name: workshop-knative-eventing-viewers-user{{ item }}
   namespace: knative-eventing
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -29,12 +29,12 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-knative-serving-viewers-{{ user }}
+  name: workshop-knative-serving-viewers-user{{ item }}
   namespace: knative-serving
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -43,12 +43,12 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-kafka-viewers-{{ user }}
+  name: workshop-kafka-viewers-user{{ item }}
   namespace: kafka
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -57,12 +57,12 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ user }}
-  namespace: {{ user }}
+  name: user{{ item }}
+  namespace: user{{ item }}
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -71,40 +71,93 @@ roleRef:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-kafka-topic-creators-{{ user }}
+  name: user{{ item }}
+  namespace: user{{ item }}-dev
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: user{{ item }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin  
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workshop-kafka-topic-creators-user{{ item }}
   namespace: kafka
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: kafka-topic-create
 ---
+# ---
+# kind: ClusterRoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: workshop-cluster-readers-user{{ item }}
+# subjects:
+#   - kind: User
+#     apiGroup: rbac.authorization.k8s.io
+#     name: user{{ item }}
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: ClusterRole
+#   name: cluster-reader
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: workshop-cluster-readers-{{ user }}
+  name: kafka-cluster-view-user{{ item }}
 subjects:
   - kind: User
     apiGroup: rbac.authorization.k8s.io
-    name: {{ user }}
+    name: user{{ item }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-reader
+  name: kafka-cluster-view
 ---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: kafka-topic-cluster-user{{ item }}
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: user9
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kafka-topic-create-cluster  
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: eventing-kafka-source-creator-user{{ item }}
+  namespace: user{{ item }}
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: user{{ item }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eventing-kafka-source-creator
 # kind: RoleBinding
 # apiVersion: rbac.authorization.k8s.io/v1
 # metadata:
-#   name: workshop-routes-viewers-{{ user }}
+#   name: workshop-routes-viewers-user{{ item }}
 #   namespace: openshift-workspaces
 # subjects:
 #   - kind: User
 #     apiGroup: rbac.authorization.k8s.io
-#     name: {{ user }}
+#     name: user{{ item }}
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
 #   kind: ClusterRole

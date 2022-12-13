@@ -9,6 +9,7 @@ modules:
     - lab1.3_configure
     - lab1.4_developer
     - lab1.5_kafka
+    - lab1.8_console
     - lab2.1_ml_overview
     - lab2.2_ml_prediction
     - lab2.3_ml_bug

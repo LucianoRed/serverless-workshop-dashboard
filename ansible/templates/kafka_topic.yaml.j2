@@ -1,14 +1,14 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: my-topic-{{ number }}
+  name: my-topic-{{ item }}
   labels:
     strimzi.io/cluster: my-cluster
-  namespace: {{ user }}
+  namespace: kafka
 spec:
   config:
     retention.ms: 604800000
     segment.bytes: 1073741824
-  partitions: 10
-  replicas: 3
-  topicName: my-topic-{{ number }}
+  partitions: 3
+  replicas: 1
+  topicName: my-topic-{{ item }}
